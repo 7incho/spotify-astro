@@ -28,11 +28,9 @@ import { playlists } from "@/lib/data";
                 <LibraryIcon />
                 Tu Biblioteca
             </SideMenuItem>
-
             {
                 playlists.map(playlist => <SideMenuCard playlist={playlist}/>)
             }
-
         </ul>
     </div>
 </nav>
