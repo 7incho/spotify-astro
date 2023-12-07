@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const Pause = () => (
   <svg role="img" aria-hidden="true" viewBox="0 0 16 16" height="16" width="16">
@@ -17,12 +17,16 @@ export function Player() {
   const [currentSong, setCurrentSong] = useState(null);
   const audioRef = useRef();
 
+  useEffect(() => {
+    audioRef.current.src = `/music/1/01.mp3`;
+  }, []);
+
   const handleClick = () => {
     if (isPlaying) {
       audioRef.current.pause();
     } else {
-      audioRef.current.src = `/music/1/01.mp3`;
       audioRef.current.play();
+      audioRef.current.volume = 0.1;
     }
 
     setIsPlaying(!isPlaying);
