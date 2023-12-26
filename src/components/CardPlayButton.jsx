@@ -1,20 +1,28 @@
+import { playlists } from "@/lib/data";
 import { Play, Pause } from "./Player";
 import { usePlayerStore } from "@/store/playerStore";
 
 export function CardPlayButton({ id }) {
-  const { currentSong, isPlaying, setIsPlaying, setCurrentSong } =
+  const { currentMusic, isPlaying, setIsPlaying, setCurrentMusic } =
     usePlayerStore((state) => state);
 
   const handleClick = () => {
+    setCurrentMusic({
+      playlist: {
+        id,
+      },
+    });
     setIsPlaying(!isPlaying);
   };
+
+  const isPlayingPlaylist = isPlaying && currentMusic?.playlist.id === id;
 
   return (
     <button
       onClick={handleClick}
       className="card-play-button rounded-full bg-green-500 p-4"
     >
-      {isPlaying ? <Pause /> : <Play />}
+      {isPlayingPlaylist ? <Pause /> : <Play />}
     </button>
   );
 }
