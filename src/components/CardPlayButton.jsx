@@ -14,21 +14,14 @@ export function CardPlayButton({ id }) {
       return;
     }
 
-    // fetch(`/api/get-playlist-info.json?id=${id}`)
-    //   .then((res) => res.json())
-    //   .then((data) => {
-    //     const { songs, playlist } = data;
-    //     setIsPlaying(true);
-    //     setCurrentMusic({ songs, playlist, song: songs[0] });
-    //   });
-
     fetch(`/api/get-playlist-info.json?id=${id}`)
       .then((res) => res.json())
       .then((data) => {
         const { songs, playlist } = data;
-
         setIsPlaying(true);
         setCurrentMusic({ songs, playlist, song: songs[0] });
+
+        console.log({ songs, playlist });
       });
   };
 
