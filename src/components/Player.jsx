@@ -43,6 +43,40 @@ export const Volume = () => (
   </svg>
 );
 
+const soundControl = ({ audio }) => {
+  const [currentTime, setCurrentTime] = useState(0);
+
+  useEffect(() => {
+    audio.current.addEventListener("timeupdate", handleTimeUpdate);
+    return () => {
+      audio.current.addEventListener("timeupdate", handleTimeUpdate);
+    };
+  });
+
+  const handleTimeUpdate = () => {
+    setCurrentTime(audio.current.currentTime);
+  };
+
+  const duration = audio?.current?.duration ?? 0;
+
+  return (
+    <div className="flex gap-x-3">
+      <span>{currentTime}</span>
+      <Slider
+        defaultValue={[0]}
+        value={[currentTime]}
+        max={audio?.current?.duration ?? 0}
+        min={0}
+        className="w-[500px]"
+        onValueChange={(value) => {
+          audio.current.currentTime = value;
+        }}
+      />
+      <span>{duration}</span>
+    </div>
+  );
+};
+
 export const VolumeControl = () => {
   const volume = usePlayerStore((state) => state.volume);
   const setVolume = usePlayerStore((state) => state.setVolume);
@@ -134,15 +168,14 @@ export function Player() {
       </div>
 
       <div className="grid place-content-center gap-4 flex-1">
-        <div className="flex justify-center">
+        <div className="flex justify-center flex-col items-center">
           <button className="bg-white rounded-full p-2" onClick={handleClick}>
             {isPlaying ? <Pause /> : <Play />}
           </button>
+          <soundControl audio={audioRef} />
+          <audio ref={audioRef} />
         </div>
       </div>
-
-      <div className="grid place-content-center"></div>
-      <audio ref={audioRef} />
 
       <div className="grid place-content-center">
         <VolumeControl />
