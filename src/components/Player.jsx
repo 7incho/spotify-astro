@@ -43,7 +43,7 @@ export const Volume = () => (
   </svg>
 );
 
-const soundControl = ({ audio }) => {
+const SongControl = ({ audio }) => {
   const [currentTime, setCurrentTime] = useState(0);
 
   useEffect(() => {
@@ -172,7 +172,7 @@ export function Player() {
           <button className="bg-white rounded-full p-2" onClick={handleClick}>
             {isPlaying ? <Pause /> : <Play />}
           </button>
-          <soundControl audio={audioRef} />
+          <SongControl audio={audioRef} />
           <audio ref={audioRef} />
         </div>
       </div>
